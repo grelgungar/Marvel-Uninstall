@@ -15,7 +15,7 @@
             font-family: 'Arial', sans-serif;
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
                         url('images/EmmaBG.webp');
-            min-height: 100vh;
+            min-height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -193,119 +193,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Elementos do DOM
-        const counterElement = document.getElementById('counter');
-        const firstDateElement = document.getElementById('first-date');
-        const lastDateElement = document.getElementById('last-date');
-
-        // Chaves para localStorage
-        const COUNTER_KEY = 'marvel_heroes_uninstall_count';
-        const FIRST_DATE_KEY = 'marvel_heroes_first_uninstall';
-        const LAST_DATE_KEY = 'marvel_heroes_last_uninstall';
-
-        // Carrega dados salvos
-        let counter = parseInt(localStorage.getItem(COUNTER_KEY)) || 0;
-        let firstDate = localStorage.getItem(FIRST_DATE_KEY);
-        let lastDate = localStorage.getItem(LAST_DATE_KEY);
-
-        // Atualiza a interface
-        function updateDisplay() {
-            counterElement.textContent = counter;
-            
-            if (firstDate) {
-                firstDateElement.textContent = new Date(firstDate).toLocaleString('pt-BR');
-            } else {
-                firstDateElement.textContent = 'Ainda não aconteceu';
-            }
-            
-            if (lastDate) {
-                lastDateElement.textContent = new Date(lastDate).toLocaleString('pt-BR');
-            } else {
-                lastDateElement.textContent = 'Ainda não aconteceu';
-            }
-        }
-
-        // Simula incremento automático ocasional (para demonstração)
-        function simulateUninstall() {
-            // Incrementa o contador aleatoriamente (1 em 10000 chance por segundo)
-            if (Math.random() < 0.0001) {
-                counter++;
-                const now = new Date().toISOString();
-                
-                if (!firstDate) {
-                    firstDate = now;
-                }
-                
-                lastDate = now;
-                
-                localStorage.setItem(COUNTER_KEY, counter.toString());
-                if (firstDate) {
-                    localStorage.setItem(FIRST_DATE_KEY, firstDate);
-                }
-                if (lastDate) {
-                    localStorage.setItem(LAST_DATE_KEY, lastDate);
-                }
-                
-                updateDisplay();
-                
-                // Efeito visual quando incrementa
-                counterElement.style.transform = 'scale(1.2)';
-                counterElement.style.color = '#ff6b6b';
-                setTimeout(() => {
-                    counterElement.style.transform = 'scale(1)';
-                    counterElement.style.color = '#ffd700';
-                }, 300);
-            }
-        }
-
-        // Inicializa a interface
-        updateDisplay();
-
-        // Simula desinstalações ocasionais
-        setInterval(simulateUninstall, 1000);
-
-        // Easter egg: Clique triplo no contador para simular uma desinstalação
-        let clickCount = 0;
-        counterElement.addEventListener('click', () => {
-            clickCount++;
-            if (clickCount === 3) {
-                counter++;
-                const now = new Date().toISOString();
-                
-                if (!firstDate) {
-                    firstDate = now;
-                }
-                
-                lastDate = now;
-                
-                localStorage.setItem(COUNTER_KEY, counter.toString());
-                if (firstDate) {
-                    localStorage.setItem(FIRST_DATE_KEY, firstDate);
-                }
-                if (lastDate) {
-                    localStorage.setItem(LAST_DATE_KEY, lastDate);
-                }
-                
-                updateDisplay();
-                
-                // Efeito especial
-                counterElement.style.transform = 'scale(1.3)';
-                counterElement.style.color = '#ff6b6b';
-                setTimeout(() => {
-                    counterElement.style.transform = 'scale(1)';
-                    counterElement.style.color = '#ffd700';
-                }, 500);
-                
-                clickCount = 0;
-            }
-            
-            // Reset click count after 2 seconds
-            setTimeout(() => {
-                clickCount = 0;
-            }, 2000);
-        });
-    </script>
 </body>
 </html>
