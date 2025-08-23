@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Desinstalações do Marvel Rivals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80') center/cover no-repeat fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .hero-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #c41e3a;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .counter-display {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .counter-label {
+            font-size: 1.2rem;
+            display: block;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .counter-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 20px 0;
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+
+        .warning-box {
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-left: 5px solid #fff;
+        }
+
+        .warning-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .warning-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .stats {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #c41e3a;
+        }
+
+        .stats p {
+            margin: 8px 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .stats span {
+            font-weight: bold;
+            color: #c41e3a;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            .counter-number {
+                font-size: 3rem;
+            }
+            
+            .warning-title {
+                font-size: 1.1rem;
+            }
+            
+            .warning-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero-section">
+            <h1>🦸‍♂️ Contador de Desinstalações</h1>
+            <h2>Marvel Heroes</h2>
+            <div class="counter-display">
+                <span class="counter-label">Meu amigo desinstalou</span>
+                <div class="counter-number" id="counter">0</div>
+                <span class="counter-label">vezes</span>
+            </div>
+            
+            <div class="warning-box">
+                <div class="warning-title">⚠️ ALERTA MÉDICO ⚠️</div>
+                <div class="warning-text">
+                    <strong>Atenção:</strong> Desinstalar Marvel Heroes repetidamente pode causar sérios danos à saúde, incluindo:
+                    <br>• Lesão por esforço repetitivo (LER) nos dedos
+                    <br>• Stress emocional extremo
+                    <br>• Perda temporária de superpoderes
+                    <br>• Síndrome de abstinência de heróis
+                    <br><br>
+                    <em>Procure ajuda profissional se o contador passar de 50!</em>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <p>Primeira desinstalação: <span id="first-date">Ainda não aconteceu</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elementos do DOM
+        const counterElement = document.getElementById('counter');
+        const firstDateElement = document.getElementById('first-date');
+        const lastDateElement = document.getElementById('last-date');
+
+        // Chaves para localStorage
+        const COUNTER_KEY = 'marvel_heroes_uninstall_count';
+        const FIRST_DATE_KEY = 'marvel_heroes_first_uninstall';
+        const LAST_DATE_KEY = 'marvel_heroes_last_uninstall';
+
+        // Carrega dados salvos
+        let counter = parseInt(localStorage.getItem(COUNTER_KEY)) || 0;
+        let firstDate = localStorage.getItem(FIRST_DATE_KEY);
+        let lastDate = localStorage.getItem(LAST_DATE_KEY);
+
+        // Atualiza a interface
+        function updateDisplay() {
+            counterElement.textContent = counter;
+            
+            if (firstDate) {
+                firstDateElement.textContent = new Date(firstDate).toLocaleString('pt-BR');
+            } else {
+                firstDateElement.textContent = 'Ainda não aconteceu';
+            }
+            
+            if (lastDate) {
+                lastDateElement.textContent = new Date(lastDate).toLocaleString('pt-BR');
+            } else {
+                lastDateElement.textContent = 'Ainda não aconteceu';
+            }
+        }
+
+        // Simula incremento automático ocasional (para demonstração)
+        function simulateUninstall() {
+            // Incrementa o contador aleatoriamente (1 em 10000 chance por segundo)
+            if (Math.random() < 0.0001) {
+                counter++;
+                const now = new Date().toISOString();
+                
+                if (!firstDate) {
+                    firstDate = now;
+                }
+                
+                lastDate = now;
+                
+                localStorage.setItem(COUNTER_KEY, counter.toString());
+                if (firstDate) {
+                    localStorage.setItem(FIRST_DATE_KEY, firstDate);
+                }
+                if (lastDate) {
+                    localStorage.setItem(LAST_DATE_KEY, lastDate);
+                }
+                
+                updateDisplay();
+                
+                // Efeito visual quando incrementa
+                counterElement.style.transform = 'scale(1.2)';
+                counterElement.style.color = '#ff6b6b';
+                setTimeout(() => {
+                    counterElement.style.transform = 'scale(1)';
+                    counterElement.style.color = '#ffd700';
+                }, 300);
+            }
+        }
+
+        // Inicializa a interface
+        updateDisplay();
+
+        // Simula desinstalações ocasionais
+        setInterval(simulateUninstall, 1000);
+
+        // Easter egg: Clique triplo no contador para simular uma desinstalação
+        let clickCount = 0;
+        counterElement.addEventListener('click', () => {
+            clickCount++;
+            if (clickCount === 3) {
+                counter++;
+                const now = new Date().toISOString();
+                
+                if (!firstDate) {
+                    firstDate = now;
+                }
+                
+                lastDate = now;
+                
+                localStorage.setItem(COUNTER_KEY, counter.toString());
+                if (firstDate) {
+                    localStorage.setItem(FIRST_DATE_KEY, firstDate);
+                }
+                if (lastDate) {
+                    localStorage.setItem(LAST_DATE_KEY, lastDate);
+                }
+                
+                updateDisplay();
+                
+                // Efeito especial
+                counterElement.style.transform = 'scale(1.3)';
+                counterElement.style.color = '#ff6b6b';
+                setTimeout(() => {
+                    counterElement.style.transform = 'scale(1)';
+                    counterElement.style.color = '#ffd700';
+                }, 500);
+                
+                clickCount = 0;
+            }
+            
+            // Reset click count after 2 seconds
+            setTimeout(() => {
+                clickCount = 0;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
